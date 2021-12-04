@@ -1055,7 +1055,7 @@ const solvePowerConsumption = (binaryNumbers) => {
     const numBits = mostCommonBits.length;
     let gammaRate = 0, epsilonRate = 0;
     for (let i = 0; i < numBits; i++) {
-        const bitValue = Math.pow(2, numBits - i - 1);
+        const bitValue = 1 << (numBits - i - 1);
         if (mostCommonBits[i] === '1') {
             gammaRate += bitValue;
         } else {
@@ -1073,7 +1073,7 @@ const solveLifeSupportRating = (binaryNumbers) => {
     
     let oxygenGeneratorValue = 0, co2ScrubberValue = 0;
     for (let i = 0; i < numBits; i++) {
-        const bitValue = Math.pow(2, numBits - i - 1);
+        const bitValue = 1 << (numBits - i - 1);
         if (oxygenGeneratorBinary[i] === '1') {
             oxygenGeneratorValue += bitValue;
         }
@@ -1084,25 +1084,6 @@ const solveLifeSupportRating = (binaryNumbers) => {
 
     return oxygenGeneratorValue * co2ScrubberValue;
 };
-
-const exampleInput = `
-00100
-11110
-10110
-10111
-10101
-01111
-00111
-11100
-10000
-11001
-00010
-01010
-`;
-
-const exampleBinaryNumbers = exampleInput
-    .trim()
-    .split('\n');
 
 console.log(solvePowerConsumption(binaryNumbers));
 console.log(solveLifeSupportRating(binaryNumbers));
