@@ -2001,16 +2001,28 @@ const input =`
 10930
 `;
 
+
+const solve = (input, windowSize) => {
+    let previousWindowSum = Infinity, numIncreases = 0;
+    for (let i = 0; i < input.length; i++) {
+        let currentWindowSum = 0;
+        for (let j = 0; j < windowSize; j++) {
+            currentWindowSum += input[i + j];
+        }
+        if (currentWindowSum > previousWindowSum) {
+            numIncreases++;
+        }
+        previousWindowSum = currentWindowSum;
+    }
+
+    return numIncreases;
+};
+
+
 const depths = input
     .trim()
     .split('\n')
-    .map(line => parseInt(line))
+    .map(line => parseInt(line));
 
-let numIncreases = 0;
-for (let i = 1; i < depths.length; i++) {
-    if (depths[i] > depths[i-1]) {
-        numIncreases++;
-    }
-}
-
-console.log(numIncreases);
+console.log(solve(depths, 1));
+console.log(solve(depths, 3));
