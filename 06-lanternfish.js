@@ -18,8 +18,8 @@ const getDescendantCount = (() => {
             return 0; // base case
         }
 
-        const remainingDaysAfterExpiry = remainingDays - value;
-        if (!(remainingDaysAfterExpiry in cache)) {
+        const remainingDaysAfterInitialExpiry = remainingDays - value;
+        if (!(remainingDaysAfterInitialExpiry in cache)) {
             let numDescendants = 0;
             // An initial value of 1 resets on days 2, 9, 16..., an initial of 8 resets on days 9, 16, 23...
             const numResets = 1 + Math.floor((remainingDays - value - 1) / 7);
@@ -28,10 +28,13 @@ const getDescendantCount = (() => {
                 const remainingDaysAfterReset = remainingDays - value - (i * 7) - 1;
                 numDescendants += 1 + getDescendantCount(8, remainingDaysAfterReset);
             }
-            cache[remainingDaysAfterExpiry] = numDescendants;
+
+            // A starting interval of x with y days remaining would spawn as many descendants as a starting value of (x+1) with (y+1) days remaining.
+            // As a result, we can use this difference as our cache key.
+            cache[remainingDaysAfterInitialExpiry] = numDescendants;
         }
 
-        return cache[remainingDaysAfterExpiry];
+        return cache[remainingDaysAfterInitialExpiry];
     };
 })();
 
